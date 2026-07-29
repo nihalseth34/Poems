@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jay &amp; Kinjal ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #330a0c 0%, #6b1218 35%, #b52d3a 65%, #ff6f78 100%);
+    background-size: 300% 300%;
+    animation: bgShift 18s ease infinite;
+    font-family: 'Poppins', sans-serif;
+    color: #fff5f0;
+    overflow-x: hidden;
+  }
+  @keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .hearts {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .heart {
+    position: absolute;
+    bottom: -10%;
+    font-size: 20px;
+    opacity: 0.6;
+    animation: floatUp linear infinite;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.5; }
+    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+  }
+
+  .stage {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 16px;
+  }
+
+  #envelope-screen {
+    text-align: center;
+    animation: fadeIn 1.2s ease;
+  }
+
+  .envelope-wrap {
+    cursor: pointer;
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+  .envelope-wrap:hover { transform: scale(1.05); }
+  .envelope-wrap:active { transform: scale(0.97); }
+
+  .envelope {
+    font-size: 90px;
+    filter: drop-shadow(0 0 18px rgba(255,110,110,0.85)) drop-shadow(0 10px 25px rgba(0,0,0,0.35));
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 14px rgba(255,110,110,0.7)) drop-shadow(0 10px 25px rgba(0,0,0,0.35)); }
+    50% { transform: scale(1.06); filter: drop-shadow(0 0 30px rgba(255,150,150,1)) drop-shadow(0 10px 25px rgba(0,0,0,0.35)); }
+  }
+
+  .press-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin: 18px 0 6px;
+    letter-spacing: 0.5px;
+  }
+
+  .press-btn {
+    margin-top: 22px;
+    padding: 14px 36px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #8a1f1f;
+    background: linear-gradient(135deg, #ffe3e3, #ffc7c7);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 18px rgba(255,110,110,0.55), 0 8px 20px rgba(0,0,0,0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .press-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 30px rgba(255,130,130,0.85), 0 12px 28px rgba(0,0,0,0.3);
+  }
+  .press-btn:active { transform: translateY(0); }
+
+  .hint {
+    margin-top: 14px;
+    font-size: 13px;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+  }
+
+  #poem-screen {
+    display: none;
+    text-align: center;
+    max-width: 640px;
+    width: 100%;
+  }
+
+  .card {
+    background: rgba(255, 220, 220, 0.1);
+    border: 1px solid rgba(255, 190, 190, 0.35);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 40px 30px 34px;
+    box-shadow: 0 0 40px rgba(255,110,110,0.25), 0 20px 50px rgba(0,0,0,0.35);
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+  .card.reveal {
+    animation: cardIn 1s ease forwards;
+  }
+  @keyframes cardIn {
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .names {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 30px;
+    margin-bottom: 22px;
+    color: #fff2f0;
+    text-shadow: 0 0 12px rgba(255,110,110,0.9), 0 0 26px rgba(255,90,90,0.6);
+  }
+
+  .poem {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16.5px;
+    line-height: 1.6;
+    text-align: center;
+    color: #fff5f0;
+  }
+
+  .poem .stanza {
+    margin-bottom: 22px;
+  }
+  .poem .stanza:last-child { margin-bottom: 0; }
+
+  .poem p.line {
+    white-space: pre-wrap;
+    margin: 0;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: lineIn 0.6s ease forwards;
+  }
+
+  @keyframes lineIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .letter-from {
+    margin-top: 30px;
+    text-align: right;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.6;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: 1.8s;
+  }
+
+  .signature {
+    margin-top: 22px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    opacity: 0.65;
+    text-align: center;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .replay-btn {
+    margin-top: 24px;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #fff5f0;
+    padding: 8px 20px;
+    border-radius: 40px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    opacity: 0.8;
+  }
+  .replay-btn:hover { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="hearts" id="hearts"></div>
+
+<div class="stage">
+  <div id="envelope-screen">
+    <div class="envelope-wrap" onclick="revealPoem()">
+      <div class="envelope">💌</div>
+    </div>
+    <div class="press-title">A little something for you two...</div>
+    <button class="press-btn" onclick="revealPoem()">PRESS THIS</button>
+    <div class="hint">❤️ tap the envelope or the button ❤️</div>
+  </div>
+
+  <div id="poem-screen">
+    <div class="card" id="card">
+      <div class="names">👦🏻 Jay aur Kinjal 👧🏻</div>
+      <div class="poem" id="poemText"></div>
+      <div class="letter-from">~from ek ka BHAI ek ka DEVAR,<br>The one and only NIHAL</div>
+      <div class="signature">🫶🫶#JAY-KI-àNJAL🫶🫶</div>
+      <br>
+      <button class="replay-btn" onclick="location.reload()">↺ replay</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Floating hearts background
+  const heartsContainer = document.getElementById('hearts');
+  const heartEmojis = ['❤️','💕','✨','💫','🩷'];
+  for (let i = 0; i < 22; i++) {
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+    h.style.left = Math.random() * 100 + '%';
+    h.style.fontSize = (14 + Math.random() * 18) + 'px';
+    h.style.animationDuration = (8 + Math.random() * 10) + 's';
+    h.style.animationDelay = (Math.random() * 10) + 's';
+    heartsContainer.appendChild(h);
+  }
+
+  // Exact poem text, preserved verbatim, grouped into stanzas exactly as written
+  const poemStanzas = [
+    [
+      "Inka arrange se shuru hua tha SAFAR 🚗,",
+      "Par inhe nahi pata tha, Inki train 🚂 thi PYAAR 💙 ki patri PAR. "
+    ],
+    [
+      "Kisine kaha tha “The rumours were half 🌓 RIGHT”,",
+      "Par iss rumour ne kardi sabki zindagi BRIGHT 🎆. "
+    ],
+    [
+      "Inki Jodi ko lage na kisi ki NJR….THO THO THO… 🤞🤞🤞,",
+      "Jab bhi milte JAY aur KINJAL ,",
+      "Ek dusre sirf yahi kehte 🗣️, “TUM HO TOH ……. TUM HO TOH…….”."
+    ],
+    [
+      "Ek kahe “AANKHEIN 👀 khuli ho ya ho band” ",
+      "toh duja kahe “ Mere liye TUM 🫵 kaafi ☕️ ho”,",
+      "Par jo bhi iss jodi ko dekhe toh yahi KAHE,",
+      "“HAAYEE MAIN MARJAAWAN REEEEE 💘”."
+    ],
+    [
+      "💙 DIL ko kehte hai pyaar ka SYMBOL, kyunki",
+      "“JAY ko mil 🤝 gayi usKI-àNJAL🧚🏻”."
+    ]
+  ];
+
+  function revealPoem() {
+    document.getElementById('envelope-screen').style.display = 'none';
+    const poemScreen = document.getElementById('poem-screen');
+    poemScreen.style.display = 'block';
+
+    const poemText = document.getElementById('poemText');
+    poemText.innerHTML = '';
+    let i = 0;
+    poemStanzas.forEach((stanza) => {
+      const stanzaDiv = document.createElement('div');
+      stanzaDiv.className = 'stanza';
+      stanza.forEach((line) => {
+        const p = document.createElement('p');
+        p.className = 'line';
+        p.style.animationDelay = (0.15 * i) + 's';
+        p.textContent = line;
+        stanzaDiv.appendChild(p);
+        i++;
+      });
+      poemText.appendChild(stanzaDiv);
+    });
+
+    setTimeout(() => {
+      document.getElementById('card').classList.add('reveal');
+    }, 50);
+  }
+</script>
+
+</body>
+</html>
